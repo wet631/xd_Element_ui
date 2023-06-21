@@ -45,26 +45,6 @@ export default defineConfig({
           {
             items: [
               {
-                text: 'Vue 2 Docs',
-                link: 'https://v2.cn.vuejs.org/v2/guide/',
-              },
-              {
-                text: 'Vue 3 Docs',
-                link: 'https://cn.vuejs.org/guide/introduction.html',
-              },
-              {
-                text: 'TypeScript Docs',
-                link: 'https://www.tslang.cn/docs/home.html',
-              },
-              {
-                text: 'MDN Web Docs',
-                link: 'https://developer.mozilla.org/zh-CN/',
-              }
-            ]
-          },
-          {
-            items: [
-              {
                 text: 'npm',
                 link: 'https://www.npmjs.com/',
               },
@@ -92,7 +72,11 @@ export default defineConfig({
           text: '指引',
           items: [
             {
-              text: '开始',
+              text: '特性',
+              link: '/elements/features'
+            },
+            {
+              text: '快速上手',
               link: '/elements/started'
             }
           ]
@@ -101,14 +85,9 @@ export default defineConfig({
           text: '组件列表',
           items: [
             {
-              text: 'note-1',
-              link: '/elements/note-1'
+              text: 'button',
+              link: '/elements/components/button-1'
             },
-            {
-              text: 'note-2',
-              link: '/elements/note-2'
-            },
-
           ]
         }
       ],
@@ -126,14 +105,9 @@ export default defineConfig({
           text: '工具列表',
           items: [
             {
-              text: 'note-1',
-              link: '/utils/note-1'
+              text: '日期格式化',
+              link: '/utils/dataFormat-1'
             },
-            {
-              text: 'note-2',
-              link: '/utils/note-2'
-            },
-
           ]
         }
       ]

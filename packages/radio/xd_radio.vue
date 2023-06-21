@@ -1,0 +1,156 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+interface Option {
+  label: string // 选项名
+  value: any // 选项值
+  disabled?: boolean // 是否禁用单个单选器
+}
+interface Props {
+  options: Array<Option> // 单选元素数据
+  disabled?: boolean // 是否禁用
+  vertical?: boolean // 是否垂直排列
+  value?: any // 当前选中的值（v-model）
+  gap?: number // 多个单选框之间的间距，单位px，垂直排列时，间距即垂直间距
+}
+
+//定义默认值
+const props = withDefaults(defineProps<Props>(), {
+  options: () => [],
+  disabled: false,
+  vertical: false,
+  value: null,
+  gap: 6
+})
+
+const sum = computed(() => {
+  // 选项总数
+  return props.options.length
+})
+
+const styleObject = computed(() => {
+  if (props.vertical) {
+    return {
+      marginBottom: props.gap + 'px'
+    }
+  } else {
+    return {
+      marginRight: props.gap + 'px'
+    }
+  }
+})
+
+const emits = defineEmits(['update:value', 'change'])
+
+function onClick(value: any) {
+  if (value !== props.value) {
+    emits('update:value', value)
+    emits('change', value)
+  }
+}
+</script>
+
+<template>
+  <div class="m-radio">
+    <div
+      class="m-radio-wrap"
+      :class="{ vertical: vertical }"
+      :style="sum !== index + 1 ? styleObject : ''"
+      v-for="(option, index) in options"
+      :key="index"
+    >
+      <div
+        class="m-box"
+        :class="{ disabled: disabled || option.disabled }"
+        @click="disabled || option.disabled ? () => false : onClick(option.value)"
+      >
+        <span class="u-radio" :class="{ 'u-radio-checked': value === option.value }"></span>
+        <span class="u-label">
+          <slot :label="option.label">{{ option.label }}</slot>
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
+<style lang="less" scoped>
+.m-radio {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1;
+  .m-radio-wrap {
+    display: inline-block;
+    .m-box {
+      height: 100%;
+      display: inline-flex;
+      align-items: flex-start;
+      cursor: pointer;
+      &:hover {
+        .u-radio {
+          border-color: #1677ff;
+        }
+      }
+      .u-radio {
+        position: relative;
+        flex-shrink: 0; // 默认 1.即空间不足时，项目将缩小
+        margin-top: 3px;
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border: 1px solid #d9d9d9;
+        border-radius: 50%;
+        transition: all 0.3s;
+        &:after {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 16px;
+          height: 16px;
+          margin-top: -8px;
+          margin-left: -8px;
+          background-color: #fff;
+          border-radius: 100%;
+          transform: scale(0);
+          opacity: 0;
+          transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+          content: '';
+        }
+      }
+      .u-radio-checked {
+        background: #1677ff;
+        border-color: #1677ff;
+        &:after {
+          transform: scale(0.375);
+          opacity: 1;
+        }
+      }
+      .u-label {
+        word-break: break-all;
+        padding: 0 8px;
+        font-size: 14px;
+        line-height: 22px;
+        display: inline-block;
+      }
+    }
+    .disabled {
+      color: rgba(0, 0, 0, 0.25);
+      cursor: not-allowed;
+      &:hover {
+        .u-radio {
+          border-color: #d9d9d9;
+        }
+      }
+      .u-radio {
+        border-color: #d9d9d9;
+        background-color: #f5f5f5;
+        &:after {
+          transform: scale(0.5);
+          background-color: rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+  }
+  .vertical {
+    display: block;
+  }
+}
+</style>

@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "My Awesome Project"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "Xd Element UI"
+  text: "组件库"
+  tagline: 基于 Vue3 + TS + Vite 开发
   actions:
     - theme: brand
       text: Get Started
